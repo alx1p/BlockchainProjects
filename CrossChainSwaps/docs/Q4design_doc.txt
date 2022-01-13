@@ -1,0 +1,46 @@
+######################################################################
+#
+# TODO: Write a short (1-3 paragraph) design document about your solution to Q4.
+#       Please include the following:
+#     
+#         1) An explanation of what you wrote and how the ScriptPubKey works
+#         2) Briefly, how the ScriptPubKey you wrote fits into the bigger 
+#            picture of this atomic swap.
+#         3) Consider the case of Alice sending coins to Bob with coinExchangeScript:
+#            Why can Alice always get her money back if Bob doesn't redeem it? 
+#            Why can't this be solved with a simple 1-of-2 multisig? 
+#
+
+1)
+
+ScriptPK will first check for the correct solution to the Hash secret (which only Alice knows initially). This is revealed in plain text in the ScriptSig and compared to the stored Hash in the ScriptPK. (Note: this is also why there is an additional end dummy if there is an unredeemed return). If the redeemer has the correct secret, then it also needs to sign the message with their secret key (so the funds don't go to someone else, especially as the secret is now in the open).
+
+Alternately, if the secret is not revealed, the ScriptPK allows return of funds with signature of both sender and recipient (2 of 2 multisig - both need to agree). Note this introduces the need for an additional dummy variable for this path for total of 2 dummies and 2 sigs.
+
+
+2)
+
+For Alice to redeem the exchange, she needs to call the first branch of the ScriptPK and reveal the secret in plain text. Bob then sees Alice's transaction, copies the plain text secret and sends in a first branch redemption of his own.
+ 
+Alternately, if Alice does not redeem within Bob's (shorter) timelock, the presigned and time locked refund transactions come into play. Bob should redeem his refund before Alice's time lock expires and makes him vulnerable to both a redemption and refund. The presigned transactions act on the "common agreement" branch 2 of the ScriptPK. Ultimately, Alice can get a refund too of her initial locked deposit.
+
+3)
+
+Alice will broadcast the TX1 transaction (the "exchange") only when she has a signed "refund" in hand from Bob. If she broadcasts too early, she would need Bob's help to recover the funds (she needs his signature on either of the 2 paths - even if Bob can't redeem without her help either).
+
+A 1-of-2 multisig would not work for the "refund setup" (to be executed by TX2/TX4), as either Alice (or Bob) could try to claim both the "refund" and the "exchange" at the same time. If both signatures aren't required, either Alice or Bob could manufacture a refund transaction that doesn't have a lock time and thus circumvent the revert protection (normally, the second signature serves as a "check" that an appropriate nLocktime was added to the refund). The way to use it with a 1 of 2 multisig would be by using a hardcoded OP_CHECKLOCKTIMEVERIFY (CLTV) in the code and a target minimum block height/date. That way, even the 1 of 2 multisig would be required to include an appropriate nLocktime on its refund request. Here is a way I was thinking about it in a forum post:
+https://edstem.org/us/courses/12411/discussion/700542?answer=1643419
+
+
+Optional Q4: implemented live and exchanges confirmed!
+Alice spends - False
+Alice a689a43cc6fc05366a73b1c51dd9eb944ab587c984d559c1df4ad05df023346f
+Alice Refund b67890266d6f3ceefc24759147f43da572c421a39ddaaceb8d7a40d51894a49c
+Bob 89b40ce46cad8b357aaab9a496e62548f7e93045f31819539b038026f1738b9a
+Bob Refund c6578234d5dc8b6b02c93e4295ba96aae6f37641d6be46a88b57e7bdecd8d87a
+
+Alice spends - True
+Alice 21254777448e00a82393a9516c3c1d1973c238572f5ac62d77fb7558c78c3497
+Alice Exchange 96e6561b3400385b057c7ac1be20b33769ca73c279d6b93e6ac3fbcc3bb09e00
+Bob 9d87fd4b9d1eaa6a6d0c23933f3de4acb7736b912fcbd19e2f482757cafce059
+Bob Exchange b9116e9f900a75e5e370026c09a29efc10388450f804740f65f460196a248d98
