@@ -1,0 +1,98 @@
+{
+	"compiler": {
+		"version": "0.8.9+commit.e5eed63a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "creditor",
+						"type": "address"
+					},
+					{
+						"internalType": "uint32",
+						"name": "amount",
+						"type": "uint32"
+					},
+					{
+						"internalType": "address[]",
+						"name": "loopAddresses",
+						"type": "address[]"
+					},
+					{
+						"internalType": "uint32",
+						"name": "loopDebt",
+						"type": "uint32"
+					}
+				],
+				"name": "add_IOU",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "debtor",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "creditor",
+						"type": "address"
+					}
+				],
+				"name": "lookup",
+				"outputs": [
+					{
+						"internalType": "uint32",
+						"name": "ret",
+						"type": "uint32"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"mycontract.sol": "SplitWise"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"mycontract.sol": {
+			"keccak256": "0x563bd003de20564ed93fcaa5be4aee7b3e13e8595f8e4dbb5173501febf29087",
+			"license": "UNLICENSED",
+			"urls": [
+				"bzz-raw://a31b5598d3c790ac9ccbd8e9462b6b67bcf02923533a8a6a7a5836421837f786",
+				"dweb:/ipfs/QmTZdAKYSraucaUrdHB9gPz7gwEpHJyKAzjVujQBwzDs75"
+			]
+		}
+	},
+	"version": 1
+}
