@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title id="exchange-title-header"></title>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <script src="./web3.min.js"></script>
+    <script src="./abi-decoder.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  </head>
+  <body>
+    <div id="header">
+      <header>
+        <div id="sub-title-container">
+          <h1 id="title"></h1>
+          <h2 id="subtitle">Decentralized Cryptocurrency Exchange</h2>
+        </div>
+      </header>
+    </div>
+    <div class="panel panel_right">
+      <h2>My Account</h2>
+      <select id="myaccount" class="account"></select>
+      <h3 id="account-eth-balance"></h3>
+      <h3 id="account-tok-balance"></h3>
+    </div>
+    <div id="main">
+      <div id="main-display">
+        <article>
+          <div id="rate-display">
+            <h1 id="current-rate-title"> Current rate: </h1>
+            <h3 id="eth-token-rate-display"></h3>
+            <h3 id="token-eth-rate-display"></h3>
+          </div>
+          <div id="liquidity-display">
+            <h1 id="current-liquidity-title">Current Liquidity:</h1>
+            <h3 id="eth-reserves"></h3>
+            <h3 id="token-reserves"></h3>
+          </div>
+          <div id="swap-control">
+            <h4 class="swap-control-title"> Swap Currencies: </h4>
+            <label for="amt-to-swap">Amount:</label>
+            <input id="amt-to-swap" type="text"/>
+            <label for="max-slippage-swap">Maximum Slippage Percentage:</label>
+            <input id="max-slippage-swap" type="text"/>
+            <div id="swap-control-buttons">
+              <button id="swap-eth"></button>
+              <button id="swap-token"></button>
+            </div>
+          </div>
+          <div id="liquidity-control">
+            <h4 class="liquidity-control-title"> Adjust Liquidity: </h4>
+            <label for="amt-eth">Amount in Eth:</label>
+            <input id="amt-eth" type="text"/>
+            <label for="max-slippage-liquid">Maximum Slippage Percentage:</label>
+            <input id="max-slippage-liquid" type="text"/>
+            <div id="liquidity-control-buttons">
+              <button id="add-liquidity">Add Liquidity</button>
+              <button id="remove-liquidity">Remove Liquidity</button>
+              <button id="remove-all-liquidity">Remove All Liquidity</button>
+            </div>
+          </div>
+        </article>
+        <pre id="log"></pre>
+      </div>
+      
+
+    </div>
+    <script src="./exchange.js"></script>
+  </body>
+</html>

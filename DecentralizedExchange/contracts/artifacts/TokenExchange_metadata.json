@@ -1,0 +1,392 @@
+{
+	"compiler": {
+		"version": "0.8.9+commit.e5eed63a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "AddLiquidity",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amountETH",
+						"type": "uint256"
+					}
+				],
+				"name": "Received",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amountETH",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amountToken",
+						"type": "uint256"
+					}
+				],
+				"name": "Reinvested",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "RemoveLiquidity",
+				"type": "event"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "fallback"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "max_exchange_rate",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "min_exchange_rate",
+						"type": "uint256"
+					}
+				],
+				"name": "addLiquidity",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "admin",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amountTokens",
+						"type": "uint256"
+					}
+				],
+				"name": "createPool",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "decimalization",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "eth_reserves",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "k",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "poolLP",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "priceETH",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "priceToken",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "reinvestFees",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "max_exchange_rate",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "min_exchange_rate",
+						"type": "uint256"
+					}
+				],
+				"name": "removeAllLiquidity",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amountETH",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "max_exchange_rate",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "min_exchange_rate",
+						"type": "uint256"
+					}
+				],
+				"name": "removeLiquidity",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "max_exchange_rate",
+						"type": "uint256"
+					}
+				],
+				"name": "swapETHForTokens",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amountTokens",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "max_exchange_rate",
+						"type": "uint256"
+					}
+				],
+				"name": "swapTokensForETH",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "token_reserves",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalLP",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/exchange.sol": "TokenExchange"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/exchange.sol": {
+			"keccak256": "0xf1590e080c14b106f7a4cc5d323e65b7b78ecc61bcd35e556f9ee0b134f564d2",
+			"license": "UNLICENSED",
+			"urls": [
+				"bzz-raw://a34ce2ac5bd5f892601222fe04decd6b16b473857c8a16344be024b110584510",
+				"dweb:/ipfs/QmY8TjwnBXkRsxEApHmEKbUMnrT1ThdRdivyjQwzoiGGFY"
+			]
+		},
+		"contracts/token.sol": {
+			"keccak256": "0xf8d1d3cda1598ee6d9ef465df62e0b05e2476e70dba0bf31d0f975b24829439b",
+			"license": "UNLICENSED",
+			"urls": [
+				"bzz-raw://f6462e676962428d00521ae9c7013a9b14ce34201cb9927d235b2e539f750e95",
+				"dweb:/ipfs/Qmb1amcMAfmfzstHPHuu7FDkaPWgBX3hhNCWEnV3SQ7TAb"
+			]
+		},
+		"interfaces/erc20_interface.sol": {
+			"keccak256": "0xc9aeef7e3808c9f3c5bac754fd9b926560398841f34cf3f5286f03369f9d4a31",
+			"license": "UNLICENSED",
+			"urls": [
+				"bzz-raw://5aece0015377f93172f662951eb3ac389fa632cc41b6e080147d73b906234e85",
+				"dweb:/ipfs/QmUeWCKiQgXp9zMfpxE3wZDE6coTNf57vfi1m86vwXQcw3"
+			]
+		},
+		"libraries/safe_math.sol": {
+			"keccak256": "0xfbcc7710bb999c7134384ae5d3b2bb1d9574d772e7581e0261ab2464ccc52f26",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://73f6e0a4ec8ac3e39a17577f99f2a67b167f13807d2f201e1cae08b336f60e28",
+				"dweb:/ipfs/QmYynUDFBZYKFij8bUdP98JEe57jFqvXr8dgMjdp9wSnfM"
+			]
+		}
+	},
+	"version": 1
+}

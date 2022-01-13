@@ -1,0 +1,38 @@
+// =================== CS251 DEX Project =================== // 
+//                      Design Document                      //
+//                          Alex Popa                        //
+// ========================================================= //  
+
+1. Explain why adding and removing liquidity to your exchange does not change the exchange rate.
+
+The additions/removals of tokens to the pool are always done in the same ratio as the existing exchange ratio == token ratio. As such, adding/removing tokens in the same exchange ratio == token ratio preserves both ratios unchanged, just proportionally adds / removes both types of tokens. Since the new calculations for the post-ad/remove exchange ratio use the token ratio, and since tokens were added/removed proportionally, the token ratio remains the same and the exchange ratio also is the same as the old one.
+
+IMPORTANT: the way I implemented slippage is that large orders will need to "confirm" they are ok with causing large slippage on themselves vs the current exchange price posted. For example, if you want to exchange half the pool, even if you are not front run, you still need to provide a large permissible "slippage" (actual outcome vs posted rate) for the swap to go through. I think this is important because one can still cause sandwiches that have ostensibly the "same" marginal rate but actually manipulate the amount of liquidity available. As a user, I would want my "slippage" to protect me against what I actually receive.
+
+
+2. Explain your scheme for rewarding liquidity providers and justify the design decisions you made. How does it satisfy requirements (2)-(4) from Section 5?
+
+
+High reward of 1% because Kongbucks are risky. I chose a gas-optimized method as the liquidity rewards are not even tracked in state variables, but only in contract balances (accessible from the chain). The fee simply accrues as "unassigned" token and ETH balances in the contract which are retained in the contract (not sent back to swappers) and also not added on each swap to pool reserves. On swaps, there is no check for "reinvesting" the fees as existing LPs remain unchanged. This provides superior gas performance to swap clients. 
+
+However, whenever LPs want to enter or exit the pool, we need to distribute as much of the unassigned fees to the pre-existing LPs as possible. The cost and frequency of this should be associated with the relevant state changes, which is the change in LP composition. Whenever the add or remove liquidity functions are called, we first see if accrued fees can be distributed to the pool (if we have balance of fees in both tokens). The accrued unassigned fees are calculated as the differences between the totals the contract holds and the pool values eg. the token contract balances less token pool reserves and respectively contract ETH balances (less any potential current add liquidity ETH receipt for potential addLiquidity call) less ETH pool reserves. As much as possible of each token is added to pool reserves as the k-invariant exchange ratio permits, thereby "distributing" the fee to existing LPs. Small balances of one token only might remain, but rest becomes distributed to current LPs.
+
+How it satisfies 2-4: 
+2) on any swap, the swapper only receives (1-fee%) of their tokens calculated for return in the other token. The remainder fee amount is "held" in the contract
+3) by "reinvesting" the fees at any time the LP composition changes, this in effect distributes "held" fees proportionally to pre-existing LPs prior to composition change. Since adjustments happen at LP composition changes, the swap fees are distributed for that particular "providers’ fractional share of the liquidity pool at the time that the swap took place". Furthermore, the LP that provided at time "t" entered on a state where reserves have already been increased for all fees received prior to time "t" (at the time "t" entry, we first call reinvestFees prior to his addLiquidity). Similarly, when exiting, the fees are first reinvested which causes the exits to receive all (prorated) reinvested fees. There are no additional steps needed, and fee accruals are neither computed / assigned (save gas) nor sent out every time a swap takes place (gas-prohibitive).
+4) On any swap, we only add the ex fee tokens received to the pool and subtract/send the corresponding (ex fee) counterpart token. The delta (fee) in the received swap token is just held in contract but not pool reserve. This ensures the k-relationship is never violated, as the addition to pools are k-invariant. The changes only happen when LP compositions change, and only if we have a sufficient balance of each token.
+
+
+3. Describe at least one method you used to minimize your exchange contract's gas usage. Why was this method effective?
+
+- don't track LP pool owners as % which would require constant updating. Instead track as "notional quasi-token" and update the notional sums. Each LP owns the percent which is their LP notional over the LP total - similar to UNI tokens. Effective - as not needed.
+- don't store fee residual balances - saves both variables and gas updating of state variables. Effective - as variables already exist in the Eth-state.
+- no fee accrual calculation on swaps - super gas efficient - just retain the balance in contract balances for later redistribution. Effective - also not needed in between LP composition changes.
+- minor stuff like the if branches in the reinvestFee function not always calculating both max amounts under the k-requirement, require's before calcs or executions, etc. The reinvestFee unfortunately needs to be called prior to calculating remove's as someone might want to remove their fees as well - this is slightly gas inefficient on some reverts
+
+
+4. Optional Feedback:
+4a. How much time did you spend on the assignment?
+
+~12 hours, but I am slow and ran into many JS glitches and tedious issues.
+
